@@ -20,9 +20,9 @@ class ArticleEntity extends Equatable{
     this.publishedAt,
     this.content,
   });
-  
+
   @override
-  List< Object ? > get props  {
+  List < Object ? > get props {
     return [
       id,
       author,
@@ -31,7 +31,7 @@ class ArticleEntity extends Equatable{
       url,
       urlToImage,
       publishedAt,
-      content
+      content,
     ];
   }
 }

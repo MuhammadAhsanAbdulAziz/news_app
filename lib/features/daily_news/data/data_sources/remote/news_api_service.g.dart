@@ -10,9 +10,7 @@ part of 'news_api_service.dart';
 
 class _NewsApiService implements NewsApiService {
   _NewsApiService(
-    this._dio, {
-    this.baseUrl,
-  }) {
+    this._dio) {
     baseUrl ??= 'https://newsapi.org/v2';
   }
 
@@ -34,8 +32,8 @@ class _NewsApiService implements NewsApiService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<List<dynamic>>(
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<List<ArticleModel>>>(Options(
       method: 'GET',
       headers: _headers,
@@ -52,8 +50,8 @@ class _NewsApiService implements NewsApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
-        .map((dynamic i) => ArticleModel.fromJson(i as Map<String, dynamic>))
+    List<ArticleModel> value = _result.data!['articles']!
+        .map<ArticleModel>((dynamic i) => ArticleModel.fromJson(i as Map<String, dynamic>))
         .toList();
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
